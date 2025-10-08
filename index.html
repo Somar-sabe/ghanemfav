@@ -3,144 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Insight</title>
+  <title>Search Page</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f4f6f8;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
       height: 100vh;
-      margin-top: 100px;
     }
 
-    .search-container {
-      width: 400px;
-      position: relative;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 12px 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      outline: none;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .results-box {
-      position: absolute;
-      top: 48px;
-      width: 100%;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      max-height: 250px;
-      overflow-y: auto;
-      display: none;
-      z-index: 1000;
-    }
-
-    .result-item {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .result-item:hover {
-      background: #f0f0f0;
-    }
-
-    .result-item img {
-      width: 50px;
-      height: 50px;
-      border-radius: 6px;
-      margin-right: 10px;
-      object-fit: cover;
-    }
-
-    .result-info {
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #222;
+      color: white;
+      padding: 20px;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
     }
 
-    .result-info .name {
-      font-weight: bold;
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .sidebar a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 8px 0;
       font-size: 15px;
     }
 
-    .result-info .price {
+    .sidebar a:hover {
+      color: white;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+      background: #fff;
+    }
+
+    .search-box input:focus {
+      border-color: #2a9d8f;
+    }
+
+    /* Results Section (Below Search) */
+    .results {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 500px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 15px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product-card .name {
+      font-weight: bold;
+      margin: 10px 0 5px 0;
+      text-align: center;
+      color: #333;
+    }
+
+    .product-card .price {
       color: #2a9d8f;
-      font-size: 14px;
+      font-size: 15px;
     }
   </style>
 </head>
 <body>
 
-  <div class="search-container">
-    <input type="text" id="search" placeholder="Search for a product..." />
-    <div class="results-box" id="results"></div>
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <div class="main">
+    <div class="title">InsightCart</div>
+
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search for a product..." />
+      <div class="results" id="results"></div>
+    </div>
   </div>
 
   <script>
     const products = [
-      { name: "iPhone 17 Pro", price: "$1199", image: "https://via.placeholder.com/50x50?text=i17" },
-      { name: "iPhone 16", price: "$999", image: "https://via.placeholder.com/50x50?text=i16" },
-      { name: "Samsung Galaxy S24", price: "$899", image: "https://via.placeholder.com/50x50?text=S24" },
-      { name: "Google Pixel 9", price: "$799", image: "https://via.placeholder.com/50x50?text=P9" },
-      { name: "OnePlus 13", price: "$749", image: "https://via.placeholder.com/50x50?text=OP13" },
-      { name: "iPhone SE 4", price: "$499", image: "https://via.placeholder.com/50x50?text=SE4" }
+      { name: "iPhone 17 Pro", price: "$1199", image: "https://via.placeholder.com/230x130?text=iPhone+17+Pro" },
+      { name: "iPhone 16", price: "$999", image: "https://via.placeholder.com/230x130?text=iPhone+16" },
+      { name: "Samsung Galaxy S24", price: "$899", image: "https://via.placeholder.com/230x130?text=Galaxy+S24" },
+      { name: "Google Pixel 9", price: "$799", image: "https://via.placeholder.com/230x130?text=Pixel+9" },
+      { name: "OnePlus 13", price: "$749", image: "https://via.placeholder.com/230x130?text=OnePlus+13" },
+      { name: "iPhone SE 4", price: "$499", image: "https://via.placeholder.com/230x130?text=iPhone+SE+4" }
     ];
 
     const searchInput = document.getElementById("search");
-    const resultsBox = document.getElementById("results");
+    const resultsContainer = document.getElementById("results");
+
+    function displayResults(list) {
+      resultsContainer.innerHTML = "";
+      if (list.length === 0) {
+        resultsContainer.innerHTML = "<p style='color:#666;text-align:center;'>No products found</p>";
+        return;
+      }
+
+      list.slice(0, 4).forEach(p => {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <div class="name">${p.name}</div>
+          <div class="price">${p.price}</div>
+        `;
+        resultsContainer.appendChild(card);
+      });
+    }
 
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.toLowerCase().trim();
-      resultsBox.innerHTML = "";
-
       if (query === "") {
-        resultsBox.style.display = "none";
+        resultsContainer.innerHTML = "";
         return;
       }
-
       const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-
-      if (filtered.length === 0) {
-        resultsBox.style.display = "none";
-        return;
-      }
-
-      filtered.slice(0, 4).forEach(p => {
-        const item = document.createElement("div");
-        item.classList.add("result-item");
-        item.innerHTML = `
-          <img src="${p.image}" alt="${p.name}">
-          <div class="result-info">
-            <span class="name">${p.name}</span>
-            <span class="price">${p.price}</span>
-          </div>
-        `;
-        item.addEventListener("click", () => {
-          searchInput.value = p.name;
-          resultsBox.style.display = "none";
-        });
-        resultsBox.appendChild(item);
-      });
-
-      resultsBox.style.display = "block";
-    });
-
-    // Hide dropdown when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".search-container")) {
-        resultsBox.style.display = "none";
-      }
+      displayResults(filtered);
     });
   </script>
 
